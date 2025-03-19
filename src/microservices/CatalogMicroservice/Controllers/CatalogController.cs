@@ -7,11 +7,11 @@ namespace CatalogMicroservice.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CatalogController(ICatalogRepository catalogRepository) : ControllerBase
 {
     // GET: api/<CatalogController>
     [HttpGet]
-    [Authorize]
     public IActionResult Get()
     {
         var catalogItems = catalogRepository.GetCatalogItems();
@@ -20,7 +20,6 @@ public class CatalogController(ICatalogRepository catalogRepository) : Controlle
 
     // GET api/<CatalogController>/653e4410614d711b7fc953a7
     [HttpGet("{id}")]
-    [Authorize]
     public IActionResult Get(string id)
     {
         var catalogItem = catalogRepository.GetCatalogItem(id);
@@ -29,7 +28,6 @@ public class CatalogController(ICatalogRepository catalogRepository) : Controlle
 
     // POST api/<CatalogController>
     [HttpPost]
-    [Authorize]
     public IActionResult Post([FromBody] CatalogItem catalogItem)
     {
         catalogRepository.InsertCatalogItem(catalogItem);
@@ -38,7 +36,6 @@ public class CatalogController(ICatalogRepository catalogRepository) : Controlle
 
     // PUT api/<CatalogController>
     [HttpPut]
-    [Authorize]
     public IActionResult Put([FromBody] CatalogItem? catalogItem)
     {
         if (catalogItem != null)
@@ -51,7 +48,6 @@ public class CatalogController(ICatalogRepository catalogRepository) : Controlle
 
     // DELETE api/<CatalogController>/653e4410614d711b7fc953a7
     [HttpDelete("{id}")]
-    [Authorize]
     public IActionResult Delete(string id)
     {
         catalogRepository.DeleteCatalogItem(id);

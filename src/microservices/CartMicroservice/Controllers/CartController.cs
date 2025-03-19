@@ -7,11 +7,11 @@ namespace CartMicroservice.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CartController(ICartRepository cartRepository) : ControllerBase
 {
     // GET: api/<CartController>
     [HttpGet]
-    [Authorize]
     public IActionResult Get([FromQuery(Name = "u")] string userId)
     {
         var cartItems = cartRepository.GetCartItems(userId);
@@ -20,7 +20,6 @@ public class CartController(ICartRepository cartRepository) : ControllerBase
 
     // POST api/<CartController>
     [HttpPost]
-    [Authorize]
     public IActionResult Post([FromQuery(Name = "u")] string userId, [FromBody] CartItem cartItem)
     {
         cartRepository.InsertCartItem(userId, cartItem);
@@ -29,7 +28,6 @@ public class CartController(ICartRepository cartRepository) : ControllerBase
 
     // PUT api/<CartController>
     [HttpPut]
-    [Authorize]
     public IActionResult Put([FromQuery(Name = "u")] string userId, [FromBody] CartItem cartItem)
     {
         cartRepository.UpdateCartItem(userId, cartItem);
@@ -38,7 +36,6 @@ public class CartController(ICartRepository cartRepository) : ControllerBase
 
     // DELETE api/<CartController>
     [HttpDelete]
-    [Authorize]
     public IActionResult Delete([FromQuery(Name = "u")] string userId, [FromQuery(Name = "ci")] string cartItemId)
     {
         cartRepository.DeleteCartItem(userId, cartItemId);
@@ -47,7 +44,6 @@ public class CartController(ICartRepository cartRepository) : ControllerBase
 
     // PUT api/<CartController>/update-catalog-item
     [HttpPut("update-catalog-item")]
-    [Authorize]
     public IActionResult Put([FromQuery(Name = "ci")] string catalogItemId, [FromQuery(Name = "n")] string name, [FromQuery(Name = "p")] decimal price)
     {
         cartRepository.UpdateCatalogItem(catalogItemId, name, price);
@@ -56,7 +52,6 @@ public class CartController(ICartRepository cartRepository) : ControllerBase
 
     // DELETE api/<CartController>/delete-catalog-item
     [HttpDelete("delete-catalog-item")]
-    [Authorize]
     public IActionResult Delete([FromQuery(Name = "ci")] string catalogItemId)
     {
         cartRepository.DeleteCatalogItem(catalogItemId);
